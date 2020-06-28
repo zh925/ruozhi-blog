@@ -18,6 +18,7 @@ export default {
     },
     async login(ctx) {
         const { body } = ctx.request;
+        console.log(body)
         const user = await userService.findByPhone(body.phone);
         if (!user) {
             throw ErrorConstants.USER_NOT_EXISTS;
