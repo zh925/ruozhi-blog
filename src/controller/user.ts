@@ -18,12 +18,15 @@ export default {
     },
     async login(ctx) {
         const { body } = ctx.request;
-        console.log(body)
         const user = await userService.findByPhone(body.phone);
         if (!user) {
             throw ErrorConstants.USER_NOT_EXISTS;
         }
         const token = userService.login(user, body.password);
+        ctx.state.userInfo = {
+            uid: user.id,
+            token
+        }
         ctx.status = 200;
         ctx.body = {
             code: 200,

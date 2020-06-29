@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">Ruozhi's blog</h3>
-            <form class="needs-validation" novalidate method="POST" action="/api/user/login">
+            <form class="needs-validation login-form" novalidate method="POST" action="/api/user/login">
                 <div class="form-group">
                     <label for="phone">手机号码</label>
                     <input name="phone" type="text" class="form-control" placeholder="请输入手机号码" required>
@@ -17,7 +17,13 @@
                         请输入密码
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">登录</button>
+                <button class="btn btn-primary btn-block btn-login" type="submit">
+                    <span class="loading spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    登录
+                </button>
+                <a href="/user/register" class="btn btn-secondary btn-block btn-register">
+                    注册
+                </a>
             </form>
         </div>
     </div>
@@ -25,15 +31,31 @@
 
 <script>
 $(function() {
-    $('.needs-validation').on('submit', function(e) {
+    const loginBtn = $('.btn-login')
+    $('.login-form').on('submit', function(e) {
         e.preventDefault()
         this.classList.add('was-validated')
         if(!this.checkValidity()) {
             return
         }
-        const formData = $(this).serialize()
-        console.log(formData)
+        loginBtn.attr('disabled', true)
+        loginSubmit.call(this)
     })
+
+    /**
+     * 登录表单提交
+     */
+    function loginSubmit() {
+        const formData = $(this).serializeArray().reduce((data, item) => {
+            data[item.name] = item.value
+            return data
+        }, {})
+        userLogin(formData, {
+            complete() {
+                loginBtn.removeAttr('disabled')
+            }
+        })
+    }
 })
 </script>
 
@@ -49,5 +71,11 @@ $(function() {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+    .loading {
+        display: none
+    }
+    .btn-login:disabled .loading {
+        display: inline-block;
     }
 </style>

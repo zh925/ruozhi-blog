@@ -1,9 +1,10 @@
 import * as Router from 'koa-router';
-import user from './user';
+import api from './api';
+import viewRouter from './viewRouter';
 
 const router = new Router();
 
-router.prefix('/api');
-router.use('/user', user.routes());
+router.use(api.routes());
+router.use(viewRouter.routes());
 
 export default router;

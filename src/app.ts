@@ -5,7 +5,6 @@ import * as serve from 'koa-static';
 import * as path from 'path'
 
 import router from "./router";
-import viewRouter from './router/viewRouter';
 import errorHandler from "./middleware/errorHandler";
 
 const app = new Koa();
@@ -27,10 +26,8 @@ app.use(async (ctx, next) => {
     ctx.state.ip = ctx.ip;
     return next();
 });
-app.use(viewRouter.routes())
-    .use(viewRouter.allowedMethods());
-app
-    .use(router.routes())
+
+app.use(router.routes())
     .use(router.allowedMethods());
 
 app.listen(3000);
