@@ -6,3 +6,12 @@ function userLogin(data, opts) {
         ...opts
     })
 }
+
+function userRegister(data, opts) {
+    $.ajax({
+        url: '/api/user/register',
+        method: 'POST',
+        data,
+        ...opts
+    })
+}

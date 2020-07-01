@@ -19,6 +19,6 @@
                 }
             }
         },
-        error(err) {}
+        error(err) {},
     })
 })()
