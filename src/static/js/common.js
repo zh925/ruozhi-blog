@@ -10,15 +10,31 @@
         }, 2000)
     }
 
-    $.ajaxSetup({
-        success(res) {
-            if (res.errCode) {
-                switch(res.errCode) {
-                    default:
-                        alert(res.errMsg)
+    function onAjaxError(res) {
+        switch (res.errCode) {
+            default:
+                alert(res.errMsg)
+        }
+    }
+
+    const _ajax = $.ajax
+    $.ajax = function(opts) {
+        _ajax({
+            ...opts,
+            success(res) {
+                if (res.code !== 200) {
+                    onAjaxError(res)
+                    opts.error && opts.error(res)
+                    return
                 }
-            }
-        },
-        error(err) {},
-    })
+                opts.success && opts.success(res)
+            },
+            error(res) {
+                opts.error && opts.error(res)
+            },
+            conplete(res) {
+                opts.complete && opts.complete(res)
+            },
+        })
+    }
 })()
