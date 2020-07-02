@@ -1,4 +1,4 @@
-function userLogin(data, opts) {
+request.userLogin = function(data, opts) {
     $.ajax({
         url: '/api/user/login',
         method: 'POST',
@@ -7,7 +7,7 @@ function userLogin(data, opts) {
     })
 }
 
-function userRegister(data, opts) {
+request.userRegister = function(data, opts) {
     $.ajax({
         url: '/api/user/register',
         method: 'POST',

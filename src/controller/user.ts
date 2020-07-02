@@ -1,9 +1,17 @@
 import userService from '../service/userService';
 import * as ErrorConstants from "../common/errorConstants";
+import { isPhone } from '../utils/validate';
 
 export default {
     async register(ctx) {
-        const hasUser = await userService.findByPhone(ctx.request.body.phone);
+        const { body } = ctx.request;
+        if (!isPhone(body.phone)) {
+            throw ErrorConstants.PHONE_ILLEGAL;
+        }
+        if (body.password !== body.repassword) {
+            throw ErrorConstants.REPASSWORD_ERROR;
+        }
+        const hasUser = await userService.findByPhone(body.phone);
         if (hasUser) {
             throw ErrorConstants.USER_EXISTS;
         } else {

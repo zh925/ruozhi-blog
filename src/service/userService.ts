@@ -8,15 +8,19 @@ import * as jwt from 'jsonwebtoken';
 export default {
     async create(ctx) {
         const { body } = ctx.request;
-        User.create({
-            uid: this.getUuid(),
-            nickname: body.username,
-            password: MD5(body.password).toString(),
-            phone: body.phone,
-            email: body.email,
-            avatarUrl: body.avatarUrl,
-            gender: body.gender
-        });
+        try {
+            await User.create({
+                uid: this.getUuid(),
+                nickname: body.nickname,
+                password: MD5(body.password).toString(),
+                phone: body.phone,
+                email: body.email,
+                avatarUrl: body.avatarUrl,
+                gender: body.gender
+            })
+        } catch(err) {
+            throw err;
+        }
     },
     getUuid() {
         return uuidv4().replace(/-/g, '');

@@ -31,6 +31,7 @@
     </div>
 </div>
 
+<script src="/js/user.js"></script>
 <script>
 $(function() {
     const loginBtn = $('.btn-login')
@@ -52,7 +53,7 @@ $(function() {
             data[item.name] = item.value
             return data
         }, {})
-        userLogin(formData, {
+        request.userLogin(formData, {
             complete() {
                 loginBtn.removeAttr('disabled')
             }

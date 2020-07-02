@@ -5,40 +5,63 @@
             <form class="needs-validation register-form" novalidate>
                 <div class="form-group">
                     <label for="phone">手机号码</label>
-                    <input type="text" name="phone" maxlength="11" class="form-control" placeholder="请输入手机号码" required>
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="phone"
+                        maxlength="11"
+                        placeholder="请输入手机号码"
+                        required
+                        pattern="^1[3456789]\d{9}$"
+                    >
                     <div class="invalid-feedback">
-                        请输入手机号码
+                        请输入正确的手机号码
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="nickname">昵称</label>
-                    <input type="text" name="nickname" class="form-control" placeholder="请输入昵称" required>
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="nickname"
+                        placeholder="请输入昵称"
+                        maxlength="8"
+                        required
+                    >
                     <div class="invalid-feedback">
-                        请输入昵称
+                        请输入最多8位的昵称
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email">邮箱</label>
-                    <input type="text" name="email" class="form-control" placeholder="请输入邮箱">
+                    <label for="email">邮箱（可选）</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="email"
+                        placeholder="请输入邮箱"
+                    >
+                    <div class="invalid-feedback">
+                        请输入正确的邮箱
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="gender">性别</label>
                     <select class="custom-select" name="gender">
-                        <option selected>暂不选择</option>
+                        <option selected value="">暂不选择</option>
                         <option value="MALE">先生</option>
                         <option value="FEMALE">女士</option>
                       </select>
                 </div>
                 <div class="form-group">
                     <label for="password">密码</label>
-                    <input type="text" class="form-control" placeholder="请输入密码" required>
+                    <input class="form-control" name="password" type="password" minlength="8" placeholder="请输入密码" required>
                     <div class="invalid-feedback">
-                        请输入密码
+                        请输入至少8位的密码
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password">重复密码</label>
-                    <input type="text" class="form-control" placeholder="请输入重复密码" required>
+                    <label for="repassword">重复密码</label>
+                    <input class="form-control" name="repassword" type="password" placeholder="请输入重复密码" required>
                     <div class="invalid-feedback">
                         请输入重复密码
                     </div>
@@ -57,24 +80,37 @@
     </div>
 </div>
 
+<script src="/js/user.js"></script>
 <script>
 $(function() {
     const registerBtn = $('.btn-register')
-    $('.register-form').on('submit', function(e) {
+    const registerForm = $('.register-form')
+
+    /**
+     * 注册表单提交
+     */
+     registerForm.on('submit', function(e) {
         e.preventDefault()
         this.classList.add('was-validated')
         if (!this.checkValidity()) {
             return
         }
         registerBtn.attr('disabled', true)
-        registerSubmit.call(this)
+        registerRequestFunc()
     })
-    function registerSubmit() {
-        const formData = $(this).serializeArray().reduce((data, item) => {
+
+    /**
+     * 用户注册
+     */
+    function registerRequestFunc() {
+        const formData = registerForm.serializeArray().reduce((data, item) => {
             data[item.name] = item.value
             return data
         }, {})
-        userRegister(formData, {
+        if (!formData.gender) {
+            delete formData.gender
+        }
+        request.userRegister(formData, {
             success(res) {
                 if (res.code !== 200) {
                     return
