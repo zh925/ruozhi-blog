@@ -1,5 +1,4 @@
 ;(function () {
-
     window.request = {}
     const _ajax = $.ajax
     $.ajax = function(opts) {
