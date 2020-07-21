@@ -1,5 +1,6 @@
-import { Model, DataTypes } from 'sequelize'
+import { Model, DataTypes, BelongsTo } from 'sequelize'
 import sequelize from '../db'
+import User from './User'
 
 export enum Topping {
     YES = 'YES',
@@ -52,11 +53,6 @@ Post.init({
         allowNull: false,
         comment: '封面图'
     },
-    createUid: {
-        type: DataTypes.CHAR(36),
-        allowNull: false,
-        comment: '用户ID'
-    },
     publicName: {
         type: DataTypes.STRING(10),
         comment: '发布人姓名'
@@ -64,6 +60,11 @@ Post.init({
     topping: {
         type: DataTypes.ENUM('YES', 'NO'),
         comment: '是否置顶'
+    },
+    createUid: {
+        type: DataTypes.CHAR(36),
+        allowNull: false,
+        comment: '创建人ID'
     }
 }, {
     tableName: 'rz_post',

@@ -1,6 +1,8 @@
 import userService from '../service/userService'
 import * as ErrorConstants from '../common/errorConstants'
 import { isPhone } from '../utils/validate'
+import Post from '../model/Post'
+import User from '../model/User'
 
 export default {
     async register(ctx) {

@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize'
 import sequelize from '../db'
+import Post from './Post'
 
 export enum Gender {
     MALE = 'MALE',
@@ -77,6 +78,11 @@ User.init({
     sequelize: sequelize,
     timestamps: true,
     paranoid: true
+})
+
+User.hasMany(Post, {
+    foreignKey: 'createUid',
+    as: 'creator'
 })
 
 export default User
