@@ -1,4 +1,4 @@
-import { Options } from "sequelize/types";
+import { Options } from 'sequelize/types'
 
 export const db: Options = {
     host: 'localhost',
@@ -11,11 +11,11 @@ export const db: Options = {
         min: 0,
         idle: 1000
     }
-};
+}
 
-export const secret = 'ruozhi';
+export const secret = 'ruozhi'
 
 export default {
     db,
     secret
-};
+}

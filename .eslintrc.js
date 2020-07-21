@@ -3,7 +3,9 @@ module.exports = {
         'browser': true,
         'es2020': true
     },
-    'extends': 'eslint:recommended',
+    'parser': '@typescript-eslint/parser',
+    'extends': ['plugin:@typescript-eslint/recommended'],
+    'plugins': ['@typescript-eslint'],
     'parserOptions': {
         'ecmaVersion': 11,
         'sourceType': 'module'
@@ -24,6 +26,7 @@ module.exports = {
         'semi': [
             'error',
             'never'
-        ]
+        ],
+        '@typescript-eslint/explicit-module-boundary-types': 'off'
     }
 }
