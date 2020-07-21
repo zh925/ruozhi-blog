@@ -1,13 +1,13 @@
-import User from "../model/User";
-import * as ErrorConstants from "../common/errorConstants";
-import { secret } from '../config';
-import { v4 as uuidv4 } from 'uuid';
+import User from '../model/User'
+import * as ErrorConstants from '../common/errorConstants'
+import { secret } from '../config'
+import { v4 as uuidv4 } from 'uuid'
 import { MD5 } from 'crypto-js'
-import * as jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken'
 
 export default {
     async create(ctx) {
-        const { body } = ctx.request;
+        const { body } = ctx.request
         try {
             await User.create({
                 uid: this.getUuid(),
@@ -19,31 +19,28 @@ export default {
                 gender: body.gender
             })
         } catch(err) {
-            throw err;
+            throw err
         }
     },
     getUuid() {
-        return uuidv4().replace(/-/g, '');
+        return uuidv4().replace(/-/g, '')
     },
     async findByPhone(phone) {
         return User.findOne({
             where: { phone }
-        });
+        })
     },
     login(user, password) {
         if (user.password !== MD5(password).toString()) {
-            throw ErrorConstants.PASSWORD_ERROR;
+            throw ErrorConstants.PASSWORD_ERROR
         }
         return jwt.sign({
             uid: user.uid,
             phone: user.phone
-        }, secret);
+        }, secret)
     },
     getUserInfo(uid) {
-        return User.findOne({
-            where: {
-                uid
-            },
+        return User.findByPk(uid, {
             attributes: [
                 'uid',
                 'phone',
@@ -54,7 +51,8 @@ export default {
                 'createdAt',
                 'updatedAt',
                 'deletedAt'
-            ]
+            ],
+            raw: true
         })
     }
 }

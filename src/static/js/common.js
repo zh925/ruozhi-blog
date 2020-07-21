@@ -1,11 +1,11 @@
-;(function () {
+(function () {
     window.request = {}
     const _ajax = $.ajax
     $.ajax = function(opts) {
         const onAjaxError = (res) => {
             switch (res.errCode) {
-                default:
-                    _.alert(res.errMsg)
+            default:
+                _.alert(res.errMsg)
             }
         }
         _ajax({

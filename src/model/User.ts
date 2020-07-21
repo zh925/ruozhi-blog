@@ -1,76 +1,82 @@
-import {Model, CHAR, STRING, ENUM, BuildOptions, DATE} from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import sequelize from '../db';
 
-enum Gender {
-    Male = 'MALE',
-    Female = 'FEMALE'
+export enum Gender {
+    MALE = 'MALE',
+    FEMALE = 'FEMALE'
 }
 
-class UserModel extends Model {
-    public uid!: string;
-    public nickname!: string;
-    public password!: string;
-    public phone: string;
-    public email: string;
-    public avatarUrl: string;
-    public gender: Gender;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+export enum Status {
+    NORMAL = 'NORMAL',
+    BLOCK = 'BLOCK'
+}
+
+class User extends Model {
+    public uid!: string
+    public nickname!: string
+    public password!: string
+    public phone: string
+    public email: string
+    public avatarUrl: string
+    public gender: Gender
+    public status: Status
+    public readonly createdAt!: Date
+    public readonly updatedAt!: Date
     public readonly deletedAt:Date
 }
 
-type UserModelStatic = typeof Model & {
-    new (values?: object, options?: BuildOptions): UserModel;
-}
-
-const User = <UserModelStatic>sequelize.define('User', {
+User.init({
     uid: {
-        type: CHAR(36),
+        type: DataTypes.CHAR(36),
         allowNull: false,
         primaryKey: true,
         comment: '用户ID'
     },
     phone: {
-        type: CHAR(11),
+        type: DataTypes.CHAR(11),
         allowNull: false,
         unique: true,
         comment: '手机号'
     },
     password: {
-        type: CHAR(32),
+        type: DataTypes.CHAR(32),
         allowNull: false,
         comment: '登录密码'
     },
     email: {
-        type: STRING,
-        comment: '邮箱'
+        type: DataTypes.STRING,
+        comment: '邮箱',
+        validate: {
+            isEmail: true
+        }
     },
     nickname: {
-        type: STRING(8),
+        type: DataTypes.STRING(8),
         allowNull: false,
         comment: '昵称'
     },
     avatarUrl: {
-        type: STRING,
+        type: DataTypes.STRING,
         comment: '头像URL'
     },
     gender: {
-        type: ENUM('MALE', 'FEMALE'),
+        type: DataTypes.ENUM('MALE', 'FEMALE'),
         comment: '性别。MALE: 男性，FEMALE：女性'
     },
     lastLoginTime: {
-        type: DATE,
+        type: DataTypes.DATE,
         comment: '上次登录时间'
     },
     status: {
-        type: ENUM('NORMAL', 'BLOCK'),
+        type: DataTypes.ENUM('NORMAL', 'BLOCK'),
         comment: '状态。NORMAL：正常，BLOCK：封禁',
-        defaultValue: 'NORMAL'
+        defaultValue: Status.NORMAL
     }
 }, {
     tableName: 'rz_user',
+    sequelize: sequelize,
     timestamps: true,
     paranoid: true
-});
+})
 
-export default User;
+export default User

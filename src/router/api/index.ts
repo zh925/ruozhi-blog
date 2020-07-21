@@ -1,9 +1,9 @@
-import * as Router from 'koa-router';
-import user from './user';
+import * as Router from 'koa-router'
+import user from './user'
 
-const router = new Router();
+const router = new Router()
 
-router.prefix('/api');
-router.use(user.routes());
+router.prefix('/api')
+router.use(user.routes())
 
-export default router;
+export default router
