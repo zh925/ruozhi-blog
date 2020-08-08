@@ -3,6 +3,7 @@ import * as bodyParser from 'koa-bodyparser'
 import * as render from 'koa-ejs'
 import * as serve from 'koa-static'
 import * as path from 'path'
+import logger from './middleware/log4js'
 
 import router from './router'
 import errorHandler from './middleware/errorHandler'
@@ -17,7 +18,6 @@ render(app, {
     cache: false,
     debug: true
 })
-app.use(errorHandler)
 app.use(bodyParser())
 
 app.use(async (ctx, next) => {
@@ -31,8 +31,13 @@ app.use(async (ctx, next) => {
     return next()
 })
 
+
+app.use(logger);
+app.use(errorHandler)
+
 app.use(router.routes())
     .use(router.allowedMethods())
+
 
 app.listen(3000)
 

@@ -1,32 +1,41 @@
 import { Configuration } from 'log4js'
+import * as path from 'path'
 
 const config: Configuration = {
     appenders: {
-        access: {
+        console: {
+            type: 'console'
+        },
+        response: {
             type: 'dateFile',
-            filename: 'log/access.log',
-            pattern: '-yyyy-MM-dd',
-            category: 'http'
+            filename: path.resolve(__dirname, '../log/response/response'),
+            pattern: 'yyyy-MM-dd.log',
+            alwaysIncludePattern: true,
+            encoding: 'utf-8',
+            maxLogSize: 1000,
+            numBackups: 3,
+            path: ('../log/app'),
+            layout: {
+              type: 'basic'
+            }
         },
-        app: {
-            type: 'file',
-            filename: 'log/app.log',
-            maxLogSize: 10485760,
-            numBackups: 3
-        },
-        errorFile: {
-            type: 'file',
-            filename: 'log/errors.log'
-        },
-        errors: {
-            type: 'logLevelFilter',
-            level: 'ERROR',
-            appender: 'errorFile'
+        error: {
+            type: 'dateFile',
+            filename: path.resolve(__dirname, '../log/error/error'),
+            pattern: 'yyyy-MM-dd.log',
+            alwaysIncludePattern: true,
+            encoding: 'utf-8',
+            maxLogSize: 1000,
+            numBackups: 3,
+            path: ('../log/error'),
+            layout: {
+              type: 'basic'
+            }
         }
     },
     categories: {
-        default: { appenders: [ 'app', 'errors' ], level: 'DEBUG' },
-        http: { appenders: [ 'access'], level: 'DEBUG' }
+        default: { appenders: [ 'console', 'response' ], level: 'all' },
+        error: { appenders: ['error', 'console'], level: 'error' },
     }
 }
 
