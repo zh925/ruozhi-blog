@@ -49,14 +49,9 @@ $(function() {
      * 登录表单提交
      */
     function loginSubmit() {
-        const formData = $(this).serializeArray().reduce((data, item) => {
-            data[item.name] = item.value
-            return data
-        }, {})
-        request.userLogin(formData, {
-            complete() {
-                loginBtn.removeAttr('disabled')
-            }
+        const formData = $(this).serializeArray()
+        request.userLogin(formData).finally(() => {
+            loginBtn.removeAttr('disabled')
         })
     }
 })

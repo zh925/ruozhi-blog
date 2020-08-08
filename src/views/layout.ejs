@@ -13,19 +13,33 @@
     <link rel="stylesheet" href="//unpkg.com/@shoelace-style/shoelace@2.0.0-beta.7/dist/shoelace/shoelace.css">
     <script type="module" src="//unpkg.com/@shoelace-style/shoelace@2.0.0-beta.7/dist/shoelace/shoelace.esm.js"></script>
     <script src="/js/common.js"></script>
+    <script src="/js/request.js"></script>
     <title><%= title ? title + ' - Ruozhi\'s Blog' : 'Ruozhi\'s Blog' %></title>
 </head>
 <body>
-    <div class="alert alert-danger alert-global fade" role="alert">
-        <span class="alert-content"></span>
-    </div>
+    <sl-alert class="alert-global" closable>
+        <sl-icon class="alert-icon" slot="icon" name="info-circle"></sl-icon>
+        <div class="alert-message">123</div>
+    </sl-alert>
+
+    <% if(render.header) { %>
+        <%- include('./layout/header') %>
+    <% } %>
+
     <%- body %>
+
+    <% if (render.footer) { %>
+        <%- include('./layout/footer') %>
+    <% } %>
+
 </body>
 
 <style>
     .alert-global {
-        width: 80%;
-        margin: 20px auto;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 </style>
 </html>

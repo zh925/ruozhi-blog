@@ -1,6 +1,5 @@
 import { Model, DataTypes, BelongsTo } from 'sequelize'
 import sequelize from '../db'
-import User from './User'
 
 export enum Topping {
     YES = 'YES',

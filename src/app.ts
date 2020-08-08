@@ -24,6 +24,10 @@ app.use(async (ctx, next) => {
     ctx.state = ctx.state || {}
     ctx.state.now = new Date()
     ctx.state.ip = ctx.ip
+    ctx.state.render = {
+        header: true,
+        footer: true
+    }
     return next()
 })
 

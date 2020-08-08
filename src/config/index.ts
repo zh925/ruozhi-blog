@@ -1,4 +1,5 @@
 import { Options } from 'sequelize/types'
+import log from './log'
 
 export const db: Options = {
     host: 'localhost',
@@ -17,5 +18,6 @@ export const secret = 'ruozhi'
 
 export default {
     db,
-    secret
+    secret,
+    log
 }
