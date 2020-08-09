@@ -8,7 +8,7 @@ const config: Configuration = {
         },
         response: {
             type: 'dateFile',
-            filename: path.resolve(__dirname, '../log/response/response'),
+            filename: path.resolve(__dirname, '../../log/response/response'),
             pattern: 'yyyy-MM-dd.log',
             alwaysIncludePattern: true,
             encoding: 'utf-8',
@@ -19,9 +19,9 @@ const config: Configuration = {
               type: 'basic'
             }
         },
-        error: {
+        errorFile: {
             type: 'dateFile',
-            filename: path.resolve(__dirname, '../log/error/error'),
+            filename: path.resolve(__dirname, '../../log/error/error'),
             pattern: 'yyyy-MM-dd.log',
             alwaysIncludePattern: true,
             encoding: 'utf-8',
@@ -35,7 +35,7 @@ const config: Configuration = {
     },
     categories: {
         default: { appenders: [ 'console', 'response' ], level: 'all' },
-        error: { appenders: ['error', 'console'], level: 'error' },
+        error: { appenders: ['errorFile', 'console'], level: 'error' },
     }
 }
 
