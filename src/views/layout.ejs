@@ -22,15 +22,9 @@
         <div class="alert-message">123</div>
     </sl-alert>
 
-    <% if(render.header) { %>
-        <%- include('./layout/header') %>
-    <% } %>
-
+    <%- include('./layout/header') %>
     <%- body %>
-
-    <% if (render.footer) { %>
-        <%- include('./layout/footer') %>
-    <% } %>
+    <%- include('./layout/footer') %>
 
 </body>
 

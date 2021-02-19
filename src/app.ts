@@ -7,7 +7,6 @@ import logger from './middleware/log4js'
 
 import router from './router'
 import errorHandler from './middleware/errorHandler'
-
 const app = new Koa()
 
 app.use(serve(path.resolve(__dirname, 'static')))
@@ -24,15 +23,12 @@ app.use(async (ctx, next) => {
     ctx.state = ctx.state || {}
     ctx.state.now = new Date()
     ctx.state.ip = ctx.ip
-    ctx.state.render = {
-        header: true,
-        footer: true
-    }
+    ctx.state.pathname = ctx.path
     return next()
 })
 
 
-app.use(logger);
+app.use(logger)
 app.use(errorHandler)
 
 app.use(router.routes())

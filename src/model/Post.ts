@@ -1,4 +1,4 @@
-import { Model, DataTypes, BelongsTo } from 'sequelize'
+import { Model, DataTypes } from 'sequelize'
 import sequelize from '../db'
 
 export enum Topping {

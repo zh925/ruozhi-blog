@@ -1,6 +1,6 @@
 import * as Router from 'koa-router'
 import api from './api'
-import viewRouter from './viewRouter'
+import viewRouter from './view'
 
 const router = new Router()
 
