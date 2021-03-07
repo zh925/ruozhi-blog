@@ -7,26 +7,38 @@ import logger from './middleware/log4js'
 
 import router from './router'
 import errorHandler from './middleware/errorHandler'
-const app = new Koa()
+
+type AppState = {
+    now: Date
+    ip: string
+    pathname: string
+    title: string
+}
+
+const app = new Koa<AppState>()
+
+app.keys = ['ruozhi blog']
 
 app.use(serve(path.resolve(__dirname, 'static')))
 render(app, {
     root: path.join(__dirname, 'views'),
-    layout: 'layout',
+    layout: 'layout/index',
     viewExt: 'ejs',
     cache: false,
     debug: true
 })
+
 app.use(bodyParser())
 
 app.use(async (ctx, next) => {
-    ctx.state = ctx.state || {}
-    ctx.state.now = new Date()
-    ctx.state.ip = ctx.ip
-    ctx.state.pathname = ctx.path
+    ctx.state = Object.assign({}, ctx.state, {
+        now: new Date(),
+        ip: ctx.ip,
+        path: ctx.path,
+        title: ''
+    })
     return next()
 })
-
 
 app.use(logger)
 app.use(errorHandler)

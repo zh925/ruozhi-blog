@@ -1,0 +1,32 @@
+<script>
+    $(function() {
+        const notice = {
+            msg: $.cookie('__blog_notice'),
+            type: $.cookie('__blog_notice_type')
+        }
+        if (notice.msg && ['danger', 'success', 'primary', 'warning'].includes(notice.type)) {
+            const noticeEl = $(`
+                <div id="alert-global" class="alert alert-${notice.type} alert-dismissible fade show" role="alert">
+                    ${notice.msg}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `)
+            noticeEl.prependTo(document.body)
+            setTimeout(() => {
+                new bootstrap.Alert(noticeEl[0]).close()
+            }, 1000);
+            $.cookie('__blog_notice', null, {path: '<%= path %>'})
+            $.cookie('__blog_notice_type', null, {path: '<%= path %>'})
+        }
+    })
+</script>
+
+<style>
+    #alert-global {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 690px;
+    }
+</style>

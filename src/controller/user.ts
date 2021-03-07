@@ -1,6 +1,7 @@
 import userService from '../service/userService'
 import * as ErrorConstants from '../common/errorConstants'
 import { isPhone } from '../utils/validate'
+import notice from '../utils/notic'
 
 export default {
     async register(ctx) {
@@ -28,6 +29,9 @@ export default {
         const { body } = ctx.request
         const user = await userService.findByPhone(body.phone)
         if (!user) {
+            // ctx.session['__blog_notice'] = ErrorConstants.USER_NOT_EXISTS.msg
+            notice(ErrorConstants.USER_NOT_EXISTS.msg, 'danger', ctx)
+            ctx.redirect('back')
             throw ErrorConstants.USER_NOT_EXISTS
         }
         const token = userService.login(user, body.password)

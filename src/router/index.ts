@@ -1,10 +1,8 @@
 import * as Router from 'koa-router'
-import api from './api'
-import viewRouter from './view'
+import admin from './admin'
 
 const router = new Router()
 
-router.use(api.routes())
-router.use(viewRouter.routes())
+router.use(admin.routes())
 
 export default router

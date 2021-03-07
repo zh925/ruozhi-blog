@@ -80,42 +80,6 @@
     </div>
 </div>
 
-<script src="/js/api/user.js"></script>
-<script>
-$(function() {
-    const registerBtn = $('.btn-register')
-    const registerForm = $('.register-form')
-
-    /**
-     * 注册表单提交
-     */
-     registerForm.on('submit', function(e) {
-        e.preventDefault()
-        this.classList.add('was-validated')
-        if (!this.checkValidity()) {
-            return
-        }
-        registerBtn.attr('disabled', true)
-        registerRequestFunc()
-    })
-
-    /**
-     * 用户注册
-     */
-    function registerRequestFunc() {
-        const formData = registerForm.serializeArray()
-        if (!formData.gender) {
-            delete formData.gender
-        }
-        request.userRegister(formData).then(() => {
-            window.location.replace('/login')
-        }).finally(() => {
-            registerBtn.removeAttr('disabled')
-        })
-    }
-})
-</script>
-
 <style>
     body {
         width: 100%;
@@ -136,4 +100,3 @@ $(function() {
         display: inline-block;
     }
 </style>
-
