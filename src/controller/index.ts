@@ -1,5 +1,7 @@
-import user from './user'
+import admin from './admin'
+import post from './post'
 
 export default {
-    user
+    admin,
+    post
 }

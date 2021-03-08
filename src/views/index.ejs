@@ -1,6 +1,8 @@
 <div class="index">
     这是首页
-    <%= pathname %>
+    <% posts.forEach(post => { %>
+        <h3 class="title"><%= post.title %></h3>
+    <% }) %>
 </div>
 
 <script>

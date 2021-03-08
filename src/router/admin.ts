@@ -16,8 +16,7 @@ router.get('/register', async(ctx) => {
     })
 })
 
-router.post('/login', controller.user.login)
-router.post('/register', controller.user.register)
-router.get('/info/:uid', controller.user.getUserInfo)
+router.post('/login', controller.admin.login)
+router.post('/register', controller.admin.register)
 
 export default router
